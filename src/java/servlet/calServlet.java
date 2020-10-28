@@ -30,15 +30,16 @@ public class calServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //Servlet 
+        
         String num1Str = request.getParameter("number1");
         String num2Str = request.getParameter("number2");
         double num1 = Double.parseDouble(num1Str);
         double num2 = Double.parseDouble(num2Str);
-
         String result = "";
         String op = " ";
-        try (PrintWriter out = response.getWriter()) {
+        
+        //Servlet 
+        /*try (PrintWriter out = response.getWriter()) {
             switch (request.getParameter("button")) {
             case "Add":
                 op = "+";
@@ -65,23 +66,49 @@ public class calServlet extends HttpServlet {
                     result = String.valueOf(div);
                 }
                 break;
-            } 
+            }
 
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet calServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>The result of "+ num1 + op + num2+"is: " + result + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-            
-            //JSP 
-            request.setAttribute("result" ,result);
-            request.setAttribute("op" ,op);
-            request.getRequestDispatcher("result.jsp").forward(request, response);
-        }
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet calServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>The result of "+ num1 + op + num2+"is: " + result + "</h1>");
+            out.println("</body>");
+            out.println("</html>");    
+        }*/
+        //JSP
+        switch (request.getParameter("button")) {
+            case "Add":
+                op = "+";
+                double add = num1+num2;
+                result = String.valueOf(add);
+                break;
+            case "Sub":
+                op = "-";
+                double sub = num1-num2;
+                result = String.valueOf(sub);
+                break;
+            case "Mul":
+                op = "*";
+                double mul = num1*num2;
+                result = String.valueOf(mul);
+                break;
+            case "Div":
+                op = "/";
+                if (num2 == 0){
+                    result = "Error divide by 0";
+                }
+                else {
+                    double div = num1/num2;
+                    result = String.valueOf(div);
+                }
+                break;
+            }
+        request.setAttribute("result" ,result);
+        request.setAttribute("op" ,op);
+        request.getRequestDispatcher("result.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
